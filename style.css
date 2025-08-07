@@ -100,3 +100,75 @@ body {
 .next-btn {
     right: 20px;
 }
+
+/* Media query for tablets and smaller desktops */
+@media (max-width: 1024px) {
+    .slide-info h3 {
+      font-size: 1.5rem;
+    }
+    .slide-info p {
+      font-size: 0.9rem;
+    }
+    .nav-btn {
+      font-size: 2.5rem;
+      padding: 8px 16px;
+    }
+    .prev-btn {
+      left: 15px;
+    }
+    .next-btn {
+      right: 15px;
+    }
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 768px) {
+    .slider-container {
+      height: 60vh;
+    }
+    .slide-info {
+      padding: 15px;
+    }
+    .slide-info h3 {
+      font-size: 1.2rem;
+    }
+    .slide-info p {
+      font-size: 0.8rem;
+    }
+    .nav-btn {
+      font-size: 2rem;
+      padding: 5px 10px;
+      top: 50%; /* Center vertically on smaller screens */
+    }
+    .prev-btn {
+      left: 10px;
+    }
+    .next-btn {
+      right: 10px;
+    }
+  }
+  
+  /* Additional styling for very small mobile screens */
+  @media (max-width: 480px) {
+    .slider-container {
+      height: 50vh;
+    }
+    .slide-info {
+      padding: 10px;
+    }
+    .slide-info h3 {
+      font-size: 1rem;
+    }
+    .slide-info p {
+      font-size: 0.75rem;
+    }
+    .nav-btn {
+      font-size: 1.5rem;
+      padding: 3px 8px;
+    }
+    .prev-btn,
+    .next-btn {
+      top: 50%; /* Ensure vertical alignment */
+      transform: translateY(-50%);
+    }
+  }
