@@ -8,7 +8,6 @@ let currentIndex = 0
 let imagesData = []
 let slideInterval
 
-// Função para buscar as imagens do JSON
 async function fetchImages() {
     try {
         const response = await fetch(API_URL)
@@ -20,14 +19,19 @@ async function fetchImages() {
         startAutoPlay()
     } catch (error) {
         console.error("Não foi possível buscar as imagens:", error)
-        slider.innerHTML = '<p style="color: red padding: 20px text-align: center">Erro ao carregar imagens. Verifique se o JSON-Server está rodando.</p>'
+        
+        const errorParagraph = document.createElement('p')
+        errorParagraph.textContent = 'Erro ao carregar imagens. Verifique se o JSON-Server está rodando.'
+        errorParagraph.style.cssText = 'color: red padding: 20px text-align: center'
+        slider.appendChild(errorParagraph)
     }
 }
 
-// Função para renderizar as imagens e informações no slider
 function renderSlider() {
     if (imagesData.length === 0) {
-        slider.innerHTML = '<p>Nenhuma imagem encontrada.</p>'
+        const noImageParagraph = document.createElement('p')
+        noImageParagraph.textContent = 'Nenhuma imagem encontrada.'
+        slider.appendChild(noImageParagraph)
         return
     }
     
@@ -42,10 +46,15 @@ function renderSlider() {
         
         const infoElement = document.createElement('div')
         infoElement.classList.add('slide-info')
-        infoElement.innerHTML = `
-            <h3>${image.description}</h3>
-            <p>Data: ${image.date}</p>
-        `
+
+        const titleElement = document.createElement('h3')
+        titleElement.textContent = image.description
+
+        const dateElement = document.createElement('p')
+        dateElement.textContent = `Data: ${image.date}`
+
+        infoElement.appendChild(titleElement)
+        infoElement.appendChild(dateElement)
 
         slideElement.appendChild(imgElement)
         slideElement.appendChild(infoElement)
@@ -53,38 +62,32 @@ function renderSlider() {
     })
 }
 
-// Função para avançar o slide
 function nextSlide() {
     currentIndex = (currentIndex + 1) % imagesData.length
     updateSlider()
 }
 
-// Função para voltar o slide
 function prevSlide() {
     currentIndex = (currentIndex - 1 + imagesData.length) % imagesData.length
     updateSlider()
 }
 
-// Função para atualizar a posição do slider
 function updateSlider() {
     const slideWidth = slider.clientWidth
     slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`
 }
 
-// Inicia a transição automática dos slides
 function startAutoPlay() {
     slideInterval = setInterval(() => {
         nextSlide()
     }, 5000)
 }
 
-// Reinicia o timer após interação manual
 function resetAutoPlay() {
     clearInterval(slideInterval)
     startAutoPlay()
 }
 
-// Adiciona os event listeners aos botões
 prevBtn.addEventListener('click', () => {
     prevSlide()
     resetAutoPlay()
@@ -95,5 +98,4 @@ nextBtn.addEventListener('click', () => {
     resetAutoPlay()
 })
 
-// Inicia o carregamento das imagens quando a página é carregada
 document.addEventListener('DOMContentLoaded', fetchImages)
